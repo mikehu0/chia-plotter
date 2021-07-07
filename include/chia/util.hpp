@@ -209,30 +209,45 @@ namespace Util {
         memcpy(result, r, sizeof(r));
     }
 
-	inline uint64_t hweight64(uint64_t w)
+	inline uint8_t ffs(uint128_t word)
 	{
-		uint64_t res = w - ((w >> 1) & 0x5555555555555555ull);
-		res = (res & 0x3333333333333333ull) + ((res >> 2) & 0x3333333333333333ull);
-		res = (res + (res >> 4)) & 0x0F0F0F0F0F0F0F0Full;
-		res = res + (res >> 8);
-		res = res + (res >> 16);
-		return (res + (res >> 32)) & 0x00000000000000FFull;
+		uint8_t num = 0;
+
+		if ((word & 0xffffffffffffffff) == 0) {
+			num += 64;
+			word >>=64;
+		}
+		if ((word & 0xffffffff) == 0) {
+			num += 32;
+			word >>= 32;
+		}
+		if ((word & 0xffff) == 0) {
+			num += 16;
+			word >>= 16;
+		}
+		if ((word & 0xff) == 0) {
+			num += 8;
+			word >>= 8;
+		}
+		if ((word & 0xf) == 0) {
+			num += 4;
+			word >>= 4;
+		}
+		if ((word & 0x3) == 0) {
+			num += 2;
+			word >>= 2;
+		}
+		if ((word & 0x1) == 0)
+			num += 1;
+		return num;
 	}
+
     /*
      * Retrieves the size of an integer, in Bits.
      */
     inline uint8_t GetSizeBits(uint128_t value)
     {
-        uint64_t r[2];
-        r[0] = value >> 64;
-        r[1] = value & ~0ull;
-		return hweight64(r[0]) + hweight64(r[1]);
-        //uint8_t count = 0;
-        //while (value) {
-            //count++;
-            //value >>= 1;
-        //}
-        //return count;
+		return ffs(value);
     }
 
     // 'bytes' points to a big-endian 64 bit value (possibly truncated, if

@@ -235,13 +235,17 @@ https://github.com/stotiks/chia-plotter/releases
   <summary>Ubuntu 20.04</summary>
   
   ```bash
-  sudo apt install -y libsodium-dev cmake g++ git build-essential
+  #First time only for environment
+  ./evn.sh
+  ```
+
+  ```bash
   # Checkout the source and install
   git clone https://github.com/madMAx43v3r/chia-plotter.git 
   cd chia-plotter
 
   git submodule update --init
-  ./make_devel.sh
+  ./make_mike.sh
   ./build/chia_plot --help
   ```
 

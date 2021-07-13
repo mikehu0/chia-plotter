@@ -250,6 +250,15 @@ https://github.com/stotiks/chia-plotter/releases
   ./build/chia_plot --help
   ```
 
+
+  Setup a crontab to run at everyday 10:30pm
+  ```bash
+  crontab -e
+  ```
+  ```bash
+  30 22 * * 1,2,3,4       ~/chia.sh 9 ~/chia-farm*
+  ```
+
   The binaries will end up in `build/`, you can copy them elsewhere freely (on the same machine, or similar OS).
 </details>
 

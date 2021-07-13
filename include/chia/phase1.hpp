@@ -133,7 +133,7 @@ public:
             // TODO: proper support for partial bytes in Bits ctor
             C = Bits(hash_bytes + start_byte, end_byte - start_byte, (end_byte - start_byte) * 8);
 
-            C = C.Slice((k_ + kExtraBits) % 8, end_bit - start_byte * 8);
+            C = C.Slice((k_ + kExtraBits) &7, end_bit - (start_byte<<3));
         }
         uint8_t C_bytes[16];
         C.ToBytes(C_bytes);
@@ -270,7 +270,7 @@ void compute_f1(const uint8_t* id, int num_threads, DS* T1_sort)
 			out.resize(M * 16);
 			F1Calculator F1(id);
 			for(size_t i = 0; i < M; ++i) {
-				F1.compute_block(block * M + i, &out[i * 16]);
+				F1.compute_block(block * M + i, &out[i<<4]);
 			}
 		}, &output, num_threads, "phase1/F1");
 	

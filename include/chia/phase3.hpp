@@ -241,8 +241,7 @@ uint32_t WriteHeader(
 
 	const std::string header_text = "Proof of Space Plot";
 	
-	size_t num_bytes = 0;
-	num_bytes += fwrite(header_text.c_str(), 1, header_text.size(), file);
+	size_t num_bytes = fwrite(header_text.c_str(), 1, header_text.size(), file);
 	num_bytes += fwrite((id), 1, kIdLen, file);
 
 	uint8_t k_buffer[1] = {k};

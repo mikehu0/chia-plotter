@@ -64,8 +64,7 @@ struct entry_xm : entry_x {
 	size_t read(const uint8_t* buf) {
 		memcpy(&y, buf, 5);
 		y &= 0x3FFFFFFFFFull;
-		off = 0;
-		off |= buf[4] >> 6;
+		off = buf[4] >> 6;
 		off |= uint16_t(buf[5]) << 2;
 		memcpy(&pos, buf + 6, 4);
 		memcpy(meta.data(), buf + 10, sizeof(meta));

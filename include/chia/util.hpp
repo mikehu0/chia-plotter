@@ -150,7 +150,8 @@ namespace Util {
         return (i % n + n) % n;
     }
 
-    inline uint32_t ByteAlign(uint32_t num_bits) { return (((num_bits) + 8) & 7); }
+//	inline uint32_t ByteAlign(uint32_t num_bits) { return (num_bits + (8 - ((num_bits) % 8)) % 8); }
+    inline uint32_t ByteAlign(uint32_t num_bits) { return (((num_bits) + 7) & ~7); }
 
     inline std::string HexStr(const uint8_t *data, size_t len)
     {

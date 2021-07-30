@@ -245,7 +245,7 @@ int main(int argc, char** argv)
 		"c, contract", "Pool Contract Address (62 chars)", cxxopts::value<std::string>(contract_addr_str))(
 		"f, farmerkey", "Farmer Public Key (48 bytes)", cxxopts::value<std::string>(farmer_key_str))(
 		"G, tmptoggle", "Alternate tmpdir/tmpdir2", cxxopts::value<bool>(tmptoggle))(
-		"K, rmulti2", "Thread multiplier for P2 (default = 1)", cxxopts::value<int>(phase2::g_thread_multi))(
+		"K, rmulti2", "Enable thread multiplier for P2 (default = Disable)", cxxopts::value<int>(phase2::g_thread_multi))(
 		"help", "Print help");
 	
 	if(argc <= 1) {
@@ -339,6 +339,10 @@ int main(int argc, char** argv)
 	if (log_num_buckets_3 < 4 || log_num_buckets_3 > 16) {
 		std::cout << "Invalid buckets parameter -v: 2^" << log_num_buckets_3 << " (supported: 2^[4..16])" << std::endl;
 		return -2;
+	}
+	if (phase2::g_thread_multi)
+	{
+		phase2::g_thread_multi = 1;
 	}
 	{
 		const std::string path = tmp_dir + ".chia_plot_tmp";

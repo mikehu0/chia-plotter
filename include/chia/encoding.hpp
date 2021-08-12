@@ -96,14 +96,14 @@ public:
     // Calculates x * (x-1) / 2. Division is done before multiplication.
     static uint128_t GetXEnc(uint64_t x)
     {
-        uint64_t a = x, b = x - 1;
+        uint64_t a = x--;
 
-        if (a % 2 == 0)
-            a /= 2;
+        if ( a&1 )
+            a >>= 1;
         else
-            b /= 2;
+            x >>= 1;
 
-        return (uint128_t)a * b;
+        return (uint128_t)a * x;
     }
 
     // Encodes two max k bit values into one max 2k bit value. This can be thought of

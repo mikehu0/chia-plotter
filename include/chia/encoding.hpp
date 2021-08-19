@@ -99,9 +99,9 @@ public:
         uint64_t a = x--;
 
         if ( a&1 )
-            a >>= 1;
-        else
             x >>= 1;
+        else
+            a >>= 1;
 
         return (uint128_t)a * x;
     }
